@@ -63,6 +63,7 @@
         border-radius: 10px;
         padding: 10px;
         gap: 10px;
+        background-color: #fdf4ff;
     }
     
 </style>

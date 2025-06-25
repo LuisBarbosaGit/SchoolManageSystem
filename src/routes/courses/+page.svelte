@@ -1,6 +1,11 @@
 <script>
     import SideBar from "$lib/components/SideBar.svelte";
     import InfoGrid from '$lib/components/InfoGrid.svelte';
+    import {fakeinfo, dados} from '$lib/index'
+
+    for (let index = 0; index < 5; index++) {
+        dados[index] = fakeinfo  
+    }
 </script>
 
 <div id="container">
@@ -13,9 +18,13 @@
     <div id="grid">
 
         <InfoGrid tittle="Cursos cadastrados" subtittle="Lista dos cursos da sua instituição">
-            <div>
-                <p>olá</p>
-            </div>
+            {#each dados as item}
+                <div id="item">
+                    <span>{item.name}</span>
+                    <span>{item.description}</span>
+    
+                </div>
+            {/each}
         </InfoGrid>
     </div>
 </div>
@@ -52,5 +61,13 @@
         justify-content: center;
         margin: 30px;
         
+    }
+    #item{
+        display: flex;
+        border: 1px solid #6b7280;
+        border-radius: 10px;
+        padding: 10px;
+        gap: 10px;
+        background-color: #fdf4ff;
     }
 </style>
