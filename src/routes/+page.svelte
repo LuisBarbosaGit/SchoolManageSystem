@@ -59,7 +59,7 @@
     }
     #item{
         display: flex;
-        border: 1px solid black;
+        border: 1px solid #6b7280;
         border-radius: 10px;
         padding: 10px;
         gap: 10px;
