@@ -32,4 +32,10 @@
         color: #6b7280;
         font-family: sans-serif;
     }
+    #historyInfo{
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        padding-top: 10px;
+    }
 </style>

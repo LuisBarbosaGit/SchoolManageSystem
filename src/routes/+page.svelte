@@ -62,6 +62,8 @@
         border: 1px solid #6b7280;
         border-radius: 10px;
         padding: 10px;
+        flex-direction: column;
+        height: 3.5rem;
         gap: 10px;
         background-color: #fdf4ff;
     }

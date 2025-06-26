@@ -11,7 +11,7 @@
             <span>{title}</span>
             <ChartNoAxesCombinedIcon />
         </div>
-        <span>{numInfo}</span>
+        <span id="number">{numInfo}</span>
     </div>
 </div>
 
@@ -43,6 +43,13 @@
         color: #111827;
         font-size: 0.8rem;
         font-family: Arial, Helvetica, sans-serif;     
+    }
+    #number{
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        width: 100%;
+        font-size: 2rem;
     }
     
 </style>

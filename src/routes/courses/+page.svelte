@@ -16,13 +16,11 @@
         </div>
     </div>
     <div id="grid">
-
         <InfoGrid tittle="Cursos cadastrados" subtittle="Lista dos cursos da sua instituição">
             {#each dados as item}
                 <div id="item">
                     <span>{item.name}</span>
                     <span>{item.description}</span>
-    
                 </div>
             {/each}
         </InfoGrid>
@@ -67,7 +65,9 @@
         border: 1px solid #6b7280;
         border-radius: 10px;
         padding: 10px;
-        gap: 10px;
+        flex-direction: column;
+        height: 3.5rem;
+        gap: 15px;
         background-color: #fdf4ff;
     }
 </style>
