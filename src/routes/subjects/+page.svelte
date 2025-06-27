@@ -5,6 +5,7 @@
     import {fakeinfo, dados} from '$lib/index';
     import axios from 'axios';
 
+    let subjects = $state([]) 
     let  data = $state({
         id : 1,
         name : '', 
@@ -26,8 +27,8 @@
 
     async function submitForm() {
         try {
-            const response = await axios.post('https://eb250oif4f.execute-api.us-east-1.amazonaws.com/subjects/subjects')
-            data = response.data
+            const response = await axios.post('https://eb250oif4f.execute-api.us-east-1.amazonaws.com/subjects/subjects', data)
+            subjects = response.data
         } catch (error) {
             alert(error)
         }
@@ -65,7 +66,7 @@
                 <div id="item">
                     <span>{item.name}</span>
                     <span>{item.courseId}</span>
-                    <div> <button onclick={handleDelete(item.Id)}> Exluir</button></div>
+                    <div> <button onclick={() => handleDelete(item.Id)}> Exluir</button></div>
                 </div>
             {/each}
         </InfoGrid>
@@ -78,8 +79,9 @@
                     <input type="text" bind:value={data.name}>
                     <label for="nome">Insira o Id do curso</label>
                     <input type="text" bind:value={data.CourseId}>
+                    <button type="submit">Enviar</button>
                 </form>
-                <button type="submit">Enviar</button>
+                
             </Modal>
         {/if}
     </div>

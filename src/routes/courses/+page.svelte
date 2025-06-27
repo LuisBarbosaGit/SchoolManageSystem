@@ -7,6 +7,7 @@
     import axios from 'axios';
 	import { fetchModule } from "vite";
 
+    let courses = $state([])
     let  data = $state({
         id : 1,
         nome : '', 
@@ -29,8 +30,9 @@
 
     async function submitForm() {
         try {
-            const response = await axios.post('https://eb250oif4f.execute-api.us-east-1.amazonaws.com/courses')
-            data = response.data
+            const response = await axios.post('https://eb250oif4f.execute-api.us-east-1.amazonaws.com/courses', data)
+            let message = response.data
+            alert(message)
         } catch (error) {
             alert(error)
         }
@@ -41,7 +43,7 @@
             const response = await axios.get('https://eb250oif4f.execute-api.us-east-1.amazonaws.com/courses');
 
             data.id = response.data.id
-            data = response.data;
+            courses = response.data;
             console.log("Dados recebidos com sucesso!", data);
 
         } catch (error) {
@@ -66,12 +68,12 @@
     </div>
     <div id="grid">
         <InfoGrid tittle="Cursos cadastrados" subtittle="Lista dos cursos da sua instituição">
-            {#each data as item}
+            {#each courses as item}
                 <div id="item">
                     <span>{item.name}</span>
                     <span>{item.description}</span>
                     <span>{item.duration}</span>
-                    <div> <button onclick={handleDelete(item.Id)}> Exluir</button></div>
+                    <div> <button onclick={() => handleDelete(item.Id)}> Exluir</button></div>
                 </div>
             {/each}
         </InfoGrid>
@@ -86,8 +88,9 @@
                     <input type="text" bind:value={data.description}>
                     <label for="nome">Insira a duração</label>
                     <input type="text" bind:value={data.duration}>
+                    <button type="submit">Enviar</button>
                 </form>
-                <button type="submit">Enviar</button>
+                
             </Modal>
         {/if}
     </div>
