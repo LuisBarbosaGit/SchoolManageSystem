@@ -2,10 +2,35 @@
     import SideBar from "$lib/components/SideBar.svelte";
     import InfoGrid from '$lib/components/InfoGrid.svelte';
     import {fakeinfo, dados} from '$lib/index'
+	import Button from "$lib/components/Button.svelte";
+	import Modal from "$lib/components/Modal.svelte";
+	import { fetchModule } from "vite";
 
-    for (let index = 0; index < 5; index++) {
-        dados[index] = fakeinfo  
+    let  data = $state({
+        nome : '', 
+        descricao : '', 
+        duracao: ''
+    })
+    
+    let isModalOpen = $state(false)
+
+    function HandleClick() {
+        isModalOpen = true       
     }
+
+    async function submitForm() {
+        try {
+            const response =  await fetch('/endereco', {
+                method : 'POST',
+                headers : { 'COntent-Type': 'Application/json'},
+                body : JSON.stringfy(data)
+            })
+            const result = await response.json();
+        } catch (error) {
+            alert(error)
+        }
+    }
+
 </script>
 
 <div id="container">
@@ -14,16 +39,35 @@
             <p id="tittle">Manutenção de cursos</p>
             <p id="subtittle">Insira, altere ou exclua cursos</p>
         </div>
+        <Button text="Incluir" click={HandleClick}/>
+
+
     </div>
     <div id="grid">
         <InfoGrid tittle="Cursos cadastrados" subtittle="Lista dos cursos da sua instituição">
-            {#each dados as item}
+            {#each data as item}
                 <div id="item">
-                    <span>{item.name}</span>
-                    <span>{item.description}</span>
+                    <span>{item.nome}</span>
+                    <span>{item.descricao}</span>
+                    <span>{item.duracao}</span>
                 </div>
             {/each}
         </InfoGrid>
+    </div>
+    <div>
+        {#if isModalOpen}
+            <Modal onFechar={() => isModalOpen = false}>
+                <form action="" method="post" onsubmit={submitForm}>
+                    <label for="nome">Insira o Nome do curso</label>
+                    <input type="text" bind:value={data.nome}>
+                    <label for="nome">Insira a descrição</label>
+                    <input type="text" bind:value={data.descricao}>
+                    <label for="nome">Insira a duração</label>
+                    <input type="text" bind:value={data.duracao}>
+                </form>
+                <button type="submit">Enviar</button>
+            </Modal>
+        {/if}
     </div>
 </div>
 
@@ -70,4 +114,10 @@
         gap: 15px;
         background-color: #fdf4ff;
     }
+    #header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
 </style>

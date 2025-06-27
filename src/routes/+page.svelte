@@ -37,14 +37,12 @@
     #content{
         display: flex;
         flex-direction: column;
-        width: 80dvw;
     }
     #tittle{
         display: flex;
         margin-left: 1.4rem;
     }
-    #dashboardCards{ 
-        margin: 1.3rem;
+    #dashboardCards{
         align-items: center;
         justify-content: center;
         display: flex;

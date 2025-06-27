@@ -37,5 +37,8 @@
         gap: 10px;
         flex-direction: column;
         padding-top: 10px;
+        overflow-y: auto;
+        overflow-x: hidden;     
+        height: 300px;
     }
 </style>

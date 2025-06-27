@@ -18,7 +18,7 @@
 <style>
     #card{
         display: flex;
-        width: 15rem;
+        width: 11rem;
         height: 5rem;
         border: 0.5px solid #9ca3af;
         border-radius: 10px;
