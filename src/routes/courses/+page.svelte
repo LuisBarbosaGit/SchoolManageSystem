@@ -4,12 +4,14 @@
     import {fakeinfo, dados} from '$lib/index'
 	import Button from "$lib/components/Button.svelte";
 	import Modal from "$lib/components/Modal.svelte";
+    import axios from 'axios';
 	import { fetchModule } from "vite";
 
     let  data = $state({
+        id : 1,
         nome : '', 
-        descricao : '', 
-        duracao: ''
+        description : '', 
+        duration: ''
     })
     
     let isModalOpen = $state(false)
@@ -17,19 +19,38 @@
     function HandleClick() {
         isModalOpen = true       
     }
+    async function handleDelete(id){
+        try {
+            const response = await axios.delete(`https://eb250oif4f.execute-api.us-east-1.amazonaws.com/subjects/courses${id}`)
+        } catch (error) {
+            
+        }
+    }
 
     async function submitForm() {
         try {
-            const response =  await fetch('/endereco', {
-                method : 'POST',
-                headers : { 'COntent-Type': 'Application/json'},
-                body : JSON.stringfy(data)
-            })
-            const result = await response.json();
+            const response = await axios.post('https://eb250oif4f.execute-api.us-east-1.amazonaws.com/courses')
+            data = response.data
         } catch (error) {
             alert(error)
         }
     }
+    $effect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('https://eb250oif4f.execute-api.us-east-1.amazonaws.com/courses');
+
+            data.id = response.data.id
+            data = response.data;
+            console.log("Dados recebidos com sucesso!", data);
+
+        } catch (error) {
+            console.error("Falha ao buscar os dados:", error);
+        }
+    };
+
+    fetchData();
+});
 
 </script>
 
@@ -47,9 +68,10 @@
         <InfoGrid tittle="Cursos cadastrados" subtittle="Lista dos cursos da sua instituição">
             {#each data as item}
                 <div id="item">
-                    <span>{item.nome}</span>
-                    <span>{item.descricao}</span>
-                    <span>{item.duracao}</span>
+                    <span>{item.name}</span>
+                    <span>{item.description}</span>
+                    <span>{item.duration}</span>
+                    <div> <button onclick={handleDelete(item.Id)}> Exluir</button></div>
                 </div>
             {/each}
         </InfoGrid>
@@ -61,16 +83,15 @@
                     <label for="nome">Insira o Nome do curso</label>
                     <input type="text" bind:value={data.nome}>
                     <label for="nome">Insira a descrição</label>
-                    <input type="text" bind:value={data.descricao}>
+                    <input type="text" bind:value={data.description}>
                     <label for="nome">Insira a duração</label>
-                    <input type="text" bind:value={data.duracao}>
+                    <input type="text" bind:value={data.duration}>
                 </form>
                 <button type="submit">Enviar</button>
             </Modal>
         {/if}
     </div>
 </div>
-
 <style>
     #container{
         display: flex;

@@ -2,12 +2,13 @@
     import SideBar from "$lib/components/SideBar.svelte";
     import InfoGrid from '$lib/components/InfoGrid.svelte';
     import Button from "$lib/components/Button.svelte";
-    import {fakeinfo, dados} from '$lib/index'
+    import {fakeinfo, dados} from '$lib/index';
+    import axios from 'axios';
 
     let  data = $state({
-        nome : '', 
-        descricao : '', 
-        duracao: ''
+        id : 1,
+        name : '', 
+        courseId : ''
     })
     
     let isModalOpen = $state(false)
@@ -15,19 +16,38 @@
     function HandleClick() {
         isModalOpen = true       
     }
-
-     async function submitForm() {
+    async function handleDelete(id){
         try {
-            const response =  await fetch('/endereco', {
-                method : 'POST',
-                headers : { 'COntent-Type': 'Application/json'},
-                body : JSON.stringfy(data)
-            })
-            const result = await response.json();
+            const response = await axios.delete(`https://eb250oif4f.execute-api.us-east-1.amazonaws.com/subjects/subjects${id}`)
+        } catch (error) {
+            
+        }
+    }
+
+    async function submitForm() {
+        try {
+            const response = await axios.post('https://eb250oif4f.execute-api.us-east-1.amazonaws.com/subjects/subjects')
+            data = response.data
         } catch (error) {
             alert(error)
         }
     }
+
+    $effect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('https://eb250oif4f.execute-api.us-east-1.amazonaws.com/subjects/subjects');
+
+            data = response.data;
+            console.log("Dados recebidos com sucesso!", data);
+
+        } catch (error) {
+            console.error("Falha ao buscar os dados:", error);
+        }
+    };
+
+    fetchData();
+});
 
 </script>
 
@@ -43,9 +63,9 @@
         <InfoGrid tittle="Disciplinas cadastrados" subtittle="Todas as disciplinas cadastradas em seu curso">
             {#each data as item}
                 <div id="item">
-                    <span>{item.nome}</span>
-                    <span>{item.descricao}</span>
-                    <span>{item.duracao}</span>
+                    <span>{item.name}</span>
+                    <span>{item.courseId}</span>
+                    <div> <button onclick={handleDelete(item.Id)}> Exluir</button></div>
                 </div>
             {/each}
         </InfoGrid>
@@ -54,12 +74,10 @@
         {#if isModalOpen}
             <Modal onFechar={() => isModalOpen = false}>
                 <form action="submit" method="post" onsubmit={submitForm}>
-                    <label for="nome">Insira o Nome do curso</label>
-                    <input type="text" bind:value={data.nome}>
-                    <label for="nome">Insira a descrição</label>
-                    <input type="text" bind:value={data.descricao}>
-                    <label for="nome">Insira a duração</label>
-                    <input type="text" bind:value={data.duracao}>
+                    <label for="nome">Insira o nome da disciplina</label>
+                    <input type="text" bind:value={data.name}>
+                    <label for="nome">Insira o Id do curso</label>
+                    <input type="text" bind:value={data.CourseId}>
                 </form>
                 <button type="submit">Enviar</button>
             </Modal>

@@ -2,7 +2,8 @@
     import SideBar from "$lib/components/SideBar.svelte";
     import InfoGrid from '$lib/components/InfoGrid.svelte';
     import Button from "$lib/components/Button.svelte";
-    import {fakeinfo, dados} from '$lib/index'
+    import {fakeinfo, dados} from '$lib/index';
+    import axios from 'axios';
 
     let  data = $state({
         nome : '', 
@@ -15,18 +16,29 @@
     function HandleClick() {
         isModalOpen = true       
     }
-     async function submitForm() {
+    async function submitForm() {
         try {
-            const response =  await fetch('/endereco', {
-                method : 'POST',
-                headers : { 'COntent-Type': 'Application/json'},
-                body : JSON.stringfy(data)
-            })
-            const result = await response.json();
+            const response = await axios.post('https://eb250oif4f.execute-api.us-east-1.amazonaws.com')
+            data = response.data
         } catch (error) {
             alert(error)
         }
     }
+    $effect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('https://eb250oif4f.execute-api.us-east-1.amazonaws.com');
+
+            data = response.data;
+            console.log("Dados recebidos com sucesso!", data);
+
+        } catch (error) {
+            console.error("Falha ao buscar os dados:", error);
+        }
+    };
+
+    fetchData();
+});
 </script>
 
 <div id="container">
