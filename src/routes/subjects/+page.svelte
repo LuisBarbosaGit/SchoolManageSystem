@@ -3,6 +3,7 @@
     import InfoGrid from '$lib/components/InfoGrid.svelte';
     import Button from "$lib/components/Button.svelte";
     import {fakeinfo, dados} from '$lib/index';
+    import Modal from "$lib/components/Modal.svelte";
     import axios from 'axios';
 
     let subjects = $state([]) 
@@ -58,7 +59,7 @@
             <p id="tittle">Manutenção de Disciplinas</p>
             <p id="subtittle">Insira, altere ou exclua  Disciplinas</p>
         </div>
-        <Button text="Incluir"/>
+        <Button text="Incluir" click={HandleClick}/>
     </div>
     <div id="grid">
         <InfoGrid tittle="Disciplinas cadastrados" subtittle="Todas as disciplinas cadastradas em seu curso">

@@ -16,7 +16,7 @@ body {
         gap: 10px;
     }
   input{
-      width: 4rem;
+      width: 6rem;
       height: 2rem;
       border-radius: 10px;
     }
@@ -26,4 +26,10 @@ body {
     border-radius: 10px;
     background-color: blue;
     color: white;
+  }
+  #form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
   }

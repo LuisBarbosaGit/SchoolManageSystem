@@ -8,7 +8,6 @@
 			onFechar();
 		}
 	}
-    useEffect()
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
