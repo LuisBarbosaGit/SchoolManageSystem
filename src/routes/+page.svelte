@@ -16,8 +16,8 @@
     <div id="dashboardCards">
         <DashboardCard title="Total de Alunos" numInfo="567"/>
         <DashboardCard title="Disciplinas" numInfo="567"/>
-        <DashboardCard title="Alunos Aprovados" numInfo="540"/>
-        <DashboardCard title="Alunos Reprovados" numInfo="27"/>
+        <DashboardCard title="Alunos aprovados" numInfo="540"/>
+        <DashboardCard title="Alunos reprovados" numInfo="27"/>
     </div>
     <div id="grid">
         <InfoGrid tittle="Alterações recentes" subtittle="Ultimas Alterações do sistema">
