@@ -16,13 +16,12 @@
 <style>
     #container{
         display: flex;
-        max-width: 100dvw;
         height: 100dvh;
         background-color:#fafafa;      
     }
     main{
         display: flex;
-        margin: 0 auto;
+        margin: 2px;
     }
     
 </style>
